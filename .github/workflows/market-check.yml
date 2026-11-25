@@ -4,30 +4,61 @@ on:
   schedule:
     - cron: '17 0 * * *'
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: market-history
+  cancel-in-progress: false
 jobs:
   check:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Inspect official public JSON schema
+      - uses: actions/checkout@v4
+      - name: Save dated market observations
         run: |
           python - <<'PY'
           import json, urllib.request
-          url = 'https://kadomiru.jp/api/public/cards/surugaya-g8694777'
-          request = urllib.request.Request(url, headers={'Accept':'application/json','User-Agent':'PokecaLab/0.2 schema validation'})
-          with urllib.request.urlopen(request, timeout=30) as response:
+          from datetime import datetime, date, timezone, timedelta
+          from pathlib import Path
+          today = datetime.now(timezone(timedelta(hours=9))).date()
+          slug = 'surugaya-g8694777'
+          url = 'https://kadomiru.jp/api/public/cards/' + slug
+          req = urllib.request.Request(url, headers={'Accept':'application/json','User-Agent':'PokecaLab/0.3 dated observations'})
+          with urllib.request.urlopen(req, timeout=30) as response:
               data = json.loads(response.read(2000000))
-          if not isinstance(data, dict):
-              raise ValueError('Unexpected JSON schema')
-          for key in ('card', 'generatedAt', 'summary', 'attribution', 'notice'):
-              if key not in data:
-                  raise ValueError('Missing field: '+key)
-              print(key+': '+json.dumps(data[key], ensure_ascii=False)[:4000])
-          offers = data.get('offers')
-          if not isinstance(offers, list) or not offers:
-              raise ValueError('No offer records available')
-          print('Offer count:', len(offers))
-          print('Sample offer:', json.dumps(offers[0], ensure_ascii=False)[:4000])
-          print('Schema inspection complete; review confirmation dates and conditions before publishing.')
+          if data['card']['slug'] != slug or not isinstance(data['offers'], list) or not data['offers']:
+              raise ValueError('Invalid card or missing offers')
+          path = Path('data/market.json')
+          old = json.loads(path.read_text()) if path.exists() else {'history': []}
+          history = old['history']
+          seen = {(x['shopSlug'],x['checkedAt'],x['condition'],x['channel']) for x in history}
+          offers = []
+          for o in data['offers']:
+              if type(o['price']) is not int or o['price'] <= 0 or o['currency'] != 'JPY':
+                  raise ValueError('Invalid price or currency')
+              checked = date.fromisoformat(o['checkedAt'])
+              age = (today-checked).days
+              if age < 0:
+                  raise ValueError('Future source date')
+              row = {k:o[k] for k in ('shop','shopSlug','price','currency','checkedAt','condition','channel','sourceUrl')}
+              row['retrievedAt'] = today.isoformat()
+              row['stale'] = age > 7
+              offers.append(row)
+              key = (row['shopSlug'],row['checkedAt'],row['condition'],row['channel'])
+              if key not in seen:
+                  history.append({k:v for k,v in row.items() if k != 'stale'})
+                  seen.add(key)
+          result = {'card':data['card'],'attribution':data['attribution'],'notice':data['notice'],'retrievedAt':today.isoformat(),'staleAfterDays':7,'offers':offers,'history':history}
+          path.parent.mkdir(exist_ok=True)
+          path.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print('Saved',len(offers),'offers;',sum(x['stale'] for x in offers),'stale;',len(history),'unique historical observations')
           PY
+      - name: Commit observations
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/market.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record dated market observations"
+            git push
+          fi
