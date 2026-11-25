@@ -1,0 +1,299 @@
+{
+  "card": {
+    "slug": "mega-charizard-x-ex-110-080",
+    "name": "メガリザードンXex SAR",
+    "shortName": "メガリザードンXex",
+    "number": "110/080",
+    "set": "拡張パック インフェルノX",
+    "rarity": "SAR",
+    "grade": "未鑑定"
+  },
+  "attribution": {
+    "name": "カドミル",
+    "url": "https://kadomiru.jp/cards/mega-charizard-x-ex-110-080",
+    "requestedText": "出典：カドミル「メガリザードンXex SAR 110/080の買取価格比較」"
+  },
+  "notice": "掲載値は公式ページで確認した公開買取価格です。実際の査定価格を保証するものではありません。申込前に各公式ページで最新条件を確認してください。",
+  "retrievedAt": "2026-11-25",
+  "staleAfterDays": 7,
+  "offers": [
+    {
+      "shop": "フルコンプ秋葉原店",
+      "shopSlug": "fullcomp-akihabara",
+      "price": 105000,
+      "currency": "JPY",
+      "checkedAt": "2026-08-30",
+      "condition": "未鑑定・通常品（フルコンプ秋葉原店の買取基準）",
+      "channel": "店頭買取",
+      "sourceUrl": "https://www.fullcomp.jp/akihabara/kaitori/19879",
+      "retrievedAt": "2026-11-25",
+      "stale": true
+    },
+    {
+      "shop": "CBトレコロ",
+      "shopSlug": "torecolo",
+      "price": 95000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・商品状態・キズなし買取",
+      "channel": "宅配買取",
+      "sourceUrl": "https://www.torecolo.jp/shop/g/g110-080-M2-B-S/",
+      "retrievedAt": "2026-11-25",
+      "stale": true
+    },
+    {
+      "shop": "もえたく！",
+      "shopSlug": "moetaku",
+      "price": 92000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・通常カード（状態等で価格変動、キャンペーン加算前）",
+      "channel": "宅配買取",
+      "sourceUrl": "https://www.netoff.co.jp/moetaku/detail/208781",
+      "retrievedAt": "2026-11-25",
+      "stale": true
+    },
+    {
+      "shop": "遊々亭",
+      "shopSlug": "yuyutei",
+      "price": 90000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・通常品（遊々亭の買取基準）",
+      "channel": "宅配買取",
+      "sourceUrl": "https://yuyu-tei.jp/buy/poc/card/m02/10110",
+      "retrievedAt": "2026-11-25",
+      "stale": true
+    },
+    {
+      "shop": "BIGWEB",
+      "shopSlug": "bigweb",
+      "price": 85000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-01",
+      "condition": "未鑑定・プレイ用（BIGWEBの買取基準）",
+      "channel": "宅配買取",
+      "sourceUrl": "https://www.bigweb.co.jp/ja/purchase/pokemon/cardViewer/3487432",
+      "retrievedAt": "2026-11-25",
+      "stale": true
+    },
+    {
+      "shop": "駿河屋",
+      "shopSlug": "surugaya",
+      "price": 85000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・通常品（駿河屋の買取基準）",
+      "channel": "公式Web買取",
+      "sourceUrl": "https://www.suruga-ya.jp/kaitori/kaitori_detail/GU427946",
+      "retrievedAt": "2026-11-25",
+      "stale": true
+    },
+    {
+      "shop": "トレカード",
+      "shopSlug": "torecard",
+      "price": 80000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・美品基準",
+      "channel": "店頭・宅配買取",
+      "sourceUrl": "https://www.torecard.com/purchase/pokemon/list/",
+      "retrievedAt": "2026-11-25",
+      "stale": true
+    },
+    {
+      "shop": "ホビーステーション通販店",
+      "shopSlug": "hobbystation",
+      "price": 80000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・通常品（ホビーステーション通販店の買取基準）",
+      "channel": "宅配買取",
+      "sourceUrl": "https://www.hobbystation-single.jp/pk/kaitori/product/list?pageno=4",
+      "retrievedAt": "2026-11-25",
+      "stale": true
+    },
+    {
+      "shop": "Clove Base",
+      "shopSlug": "clove-base",
+      "price": 75000,
+      "currency": "JPY",
+      "checkedAt": "2026-07-29",
+      "condition": "未鑑定・状態により減額あり",
+      "channel": "店頭買取",
+      "sourceUrl": "https://base.clove.jp/prices/pokemon",
+      "retrievedAt": "2026-11-25",
+      "stale": true
+    },
+    {
+      "shop": "ふもっふトレカ",
+      "shopSlug": "fumotcg",
+      "price": 65000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・状態A（美品相当）の買取参考価格",
+      "channel": "宅配買取",
+      "sourceUrl": "https://www.fumotcg-buy.com/po/cards/po-M2-110-N",
+      "retrievedAt": "2026-11-25",
+      "stale": true
+    },
+    {
+      "shop": "マンダイトレカ",
+      "shopSlug": "mandai-toreca",
+      "price": 60000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-01",
+      "condition": "未鑑定・通常カード（状態・在庫により価格変動）",
+      "channel": "店頭・宅配買取",
+      "sourceUrl": "https://mandai-s.jp/tcg/",
+      "retrievedAt": "2026-11-25",
+      "stale": true
+    },
+    {
+      "shop": "トレトク",
+      "shopSlug": "toretoku",
+      "price": 54000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・完品／美品基準（状態・在庫で変動）",
+      "channel": "宅配買取",
+      "sourceUrl": "https://kaitori-toretoku.jp/buypricelist/pokemon",
+      "retrievedAt": "2026-11-25",
+      "stale": true
+    }
+  ],
+  "history": [
+    {
+      "shop": "フルコンプ秋葉原店",
+      "shopSlug": "fullcomp-akihabara",
+      "price": 105000,
+      "currency": "JPY",
+      "checkedAt": "2026-08-30",
+      "condition": "未鑑定・通常品（フルコンプ秋葉原店の買取基準）",
+      "channel": "店頭買取",
+      "sourceUrl": "https://www.fullcomp.jp/akihabara/kaitori/19879",
+      "retrievedAt": "2026-11-25"
+    },
+    {
+      "shop": "CBトレコロ",
+      "shopSlug": "torecolo",
+      "price": 95000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・商品状態・キズなし買取",
+      "channel": "宅配買取",
+      "sourceUrl": "https://www.torecolo.jp/shop/g/g110-080-M2-B-S/",
+      "retrievedAt": "2026-11-25"
+    },
+    {
+      "shop": "もえたく！",
+      "shopSlug": "moetaku",
+      "price": 92000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・通常カード（状態等で価格変動、キャンペーン加算前）",
+      "channel": "宅配買取",
+      "sourceUrl": "https://www.netoff.co.jp/moetaku/detail/208781",
+      "retrievedAt": "2026-11-25"
+    },
+    {
+      "shop": "遊々亭",
+      "shopSlug": "yuyutei",
+      "price": 90000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・通常品（遊々亭の買取基準）",
+      "channel": "宅配買取",
+      "sourceUrl": "https://yuyu-tei.jp/buy/poc/card/m02/10110",
+      "retrievedAt": "2026-11-25"
+    },
+    {
+      "shop": "BIGWEB",
+      "shopSlug": "bigweb",
+      "price": 85000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-01",
+      "condition": "未鑑定・プレイ用（BIGWEBの買取基準）",
+      "channel": "宅配買取",
+      "sourceUrl": "https://www.bigweb.co.jp/ja/purchase/pokemon/cardViewer/3487432",
+      "retrievedAt": "2026-11-25"
+    },
+    {
+      "shop": "駿河屋",
+      "shopSlug": "surugaya",
+      "price": 85000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・通常品（駿河屋の買取基準）",
+      "channel": "公式Web買取",
+      "sourceUrl": "https://www.suruga-ya.jp/kaitori/kaitori_detail/GU427946",
+      "retrievedAt": "2026-11-25"
+    },
+    {
+      "shop": "トレカード",
+      "shopSlug": "torecard",
+      "price": 80000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・美品基準",
+      "channel": "店頭・宅配買取",
+      "sourceUrl": "https://www.torecard.com/purchase/pokemon/list/",
+      "retrievedAt": "2026-11-25"
+    },
+    {
+      "shop": "ホビーステーション通販店",
+      "shopSlug": "hobbystation",
+      "price": 80000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・通常品（ホビーステーション通販店の買取基準）",
+      "channel": "宅配買取",
+      "sourceUrl": "https://www.hobbystation-single.jp/pk/kaitori/product/list?pageno=4",
+      "retrievedAt": "2026-11-25"
+    },
+    {
+      "shop": "Clove Base",
+      "shopSlug": "clove-base",
+      "price": 75000,
+      "currency": "JPY",
+      "checkedAt": "2026-07-29",
+      "condition": "未鑑定・状態により減額あり",
+      "channel": "店頭買取",
+      "sourceUrl": "https://base.clove.jp/prices/pokemon",
+      "retrievedAt": "2026-11-25"
+    },
+    {
+      "shop": "ふもっふトレカ",
+      "shopSlug": "fumotcg",
+      "price": 65000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・状態A（美品相当）の買取参考価格",
+      "channel": "宅配買取",
+      "sourceUrl": "https://www.fumotcg-buy.com/po/cards/po-M2-110-N",
+      "retrievedAt": "2026-11-25"
+    },
+    {
+      "shop": "マンダイトレカ",
+      "shopSlug": "mandai-toreca",
+      "price": 60000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-01",
+      "condition": "未鑑定・通常カード（状態・在庫により価格変動）",
+      "channel": "店頭・宅配買取",
+      "sourceUrl": "https://mandai-s.jp/tcg/",
+      "retrievedAt": "2026-11-25"
+    },
+    {
+      "shop": "トレトク",
+      "shopSlug": "toretoku",
+      "price": 54000,
+      "currency": "JPY",
+      "checkedAt": "2026-09-02",
+      "condition": "未鑑定・完品／美品基準（状態・在庫で変動）",
+      "channel": "宅配買取",
+      "sourceUrl": "https://kaitori-toretoku.jp/buypricelist/pokemon",
+      "retrievedAt": "2026-11-25"
+    }
+  ]
+}
