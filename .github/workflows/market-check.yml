@@ -10,17 +10,24 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Verify official public JSON
+      - name: Inspect official public JSON schema
         run: |
           python - <<'PY'
           import json, urllib.request
           url = 'https://kadomiru.jp/api/public/cards/surugaya-g8694777'
-          request = urllib.request.Request(url, headers={'Accept':'application/json','User-Agent':'PokecaLab/0.1 API connectivity test'})
+          request = urllib.request.Request(url, headers={'Accept':'application/json','User-Agent':'PokecaLab/0.2 schema validation'})
           with urllib.request.urlopen(request, timeout=30) as response:
               data = json.loads(response.read(2000000))
           if not isinstance(data, dict):
               raise ValueError('Unexpected JSON schema')
-          print('JSON keys:', sorted(data.keys()))
-          print('Attribution:', data.get('attribution'))
-          print('Connection successful; price schema requires validation before publication.')
+          for key in ('card', 'generatedAt', 'summary', 'attribution', 'notice'):
+              if key not in data:
+                  raise ValueError('Missing field: '+key)
+              print(key+': '+json.dumps(data[key], ensure_ascii=False)[:4000])
+          offers = data.get('offers')
+          if not isinstance(offers, list) or not offers:
+              raise ValueError('No offer records available')
+          print('Offer count:', len(offers))
+          print('Sample offer:', json.dumps(offers[0], ensure_ascii=False)[:4000])
+          print('Schema inspection complete; review confirmation dates and conditions before publishing.')
           PY
