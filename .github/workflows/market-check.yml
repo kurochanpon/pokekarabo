@@ -1,0 +1,26 @@
+name: Domestic market API check
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 0 * * *'
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify official public JSON
+        run: |
+          python - <<'PY'
+          import json, urllib.request
+          url = 'https://kadomiru.jp/api/public/cards/surugaya-g8694777'
+          request = urllib.request.Request(url, headers={'Accept':'application/json','User-Agent':'PokecaLab/0.1 API connectivity test'})
+          with urllib.request.urlopen(request, timeout=30) as response:
+              data = json.loads(response.read(2000000))
+          if not isinstance(data, dict):
+              raise ValueError('Unexpected JSON schema')
+          print('JSON keys:', sorted(data.keys()))
+          print('Attribution:', data.get('attribution'))
+          print('Connection successful; price schema requires validation before publication.')
+          PY
