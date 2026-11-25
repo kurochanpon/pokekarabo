@@ -1,1 +1,50 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ポケカ相場ラボ</title><style>body{font:16px system-ui;background:#f5f7fb;color:#17283d;margin:0}main{max-width:900px;margin:auto;padding:48px 24px}header{border-bottom:1px solid #ccd6e2;padding-bottom:24px}section{background:white;padding:24px;border-radius:12px;margin:20px 0}small{color:#53657a}a{color:#235c9b}.notice{padding:12px;background:#f2f4f7;border-radius:6px}</style></head><body><main><header><small>POKECA MARKET LAB</small><h1>ポケカ相場ラボ</h1><p>日本版ポケモンカードの国内・海外相場を分析する独立系情報サイト。</p></header><section><h2>国内買取価格・試験掲載</h2><p class="notice">現在の価格とは限りません。提供元の確認日を必ずご確認ください。</p><iframe src="https://kadomiru.jp/embed/cards/surugaya-g8694777?theme=light" title="ブラッキー PROMO 054/L-Pの買取価格比較" width="100%" height="380" loading="lazy" style="border:0;max-width:560px" referrerpolicy="strict-origin-when-cross-origin"></iframe><p><a href="https://kadomiru.jp/cards/surugaya-g8694777">出典：カドミル・ブラッキー PROMO 054/L-P</a></p><p>公開買取提示額であり成約価格ではありません。取引前に各店舗の公式情報で再確認してください。</p></section><section><h2>高騰・下落ランキング</h2><p>比較可能な価格履歴の蓄積後に掲載します。</p></section><section><h2>海外相場・PSA10</h2><p>準備中。未鑑定品と鑑定品、買取価格と成約価格は区別して掲載します。</p></section><footer><small>非公式サイトです。価格は取引を保証するものではありません。</small></footer></main></body></html>
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ポケカ相場ラボ</title><style>
+*{box-sizing:border-box}body{font:16px system-ui;background:#f5f7fb;color:#17283d;margin:0}main{max-width:960px;margin:auto;padding:32px 16px}header{border-bottom:1px solid #ccd6e2;padding-bottom:18px}section{background:white;padding:24px;border-radius:12px;margin:20px 0}small{color:#53657a}a{color:#235c9b}.notice{padding:12px;background:#fff4df;border-radius:6px}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:600px}th,td{padding:12px;text-align:left;border-bottom:1px solid #e0e5ed}th{background:#f5f7fb}td.price{font-weight:bold;white-space:nowrap;font-variant-numeric:tabular-nums}svg{width:100%;height:auto}select{padding:8px;max-width:100%}.muted{color:#53657a}
+</style></head><body><main><header><small>POKECA MARKET LAB</small><h1>ポケカ相場ラボ</h1><p>日本版ポケモンカードの国内・海外相場を分析する独立系情報サイト。</p></header>
+<section><h2>国内買取価格・試験掲載</h2><h3 id="card">ブラッキー PROMO 054/L-P</h3><p id="status" role="status">保存データを読み込み中…</p><p id="warning" class="notice" hidden></p><div class="scroll"><table><thead><tr><th>店舗・条件</th><th>確認時の買取価格</th><th>価格確認日</th><th>鮮度</th></tr></thead><tbody id="offers"></tbody></table></div><p><small>取得日と価格確認日は異なります。買取提示額は成約価格ではありません。</small></p><p><a href="https://kadomiru.jp/cards/surugaya-g8694777" id="source">出典：カドミル「ブラッキー PROMO 054/L-Pの買取価格比較」</a></p><p id="notice"></p></section>
+<section><h2>店舗別の価格推移</h2><label for="shop">店舗・買取条件：</label><select id="shop" disabled></select><p id="change"></p><div id="chart" role="img" aria-label="店舗別の価格履歴"></div><p class="muted">同じ店舗・条件・買取方法の確認日別データを使用。前日比は連続した日付の観測があり、最新の観測が古くない場合のみ表示。</p></section>
+<section><h2>高騰・下落ランキング</h2><p>複数カードの比較可能な価格履歴が蓄積されてから掲載します。</p></section><section><h2>海外相場・PSA10</h2><p>準備中。未鑑定品と鑑定品、買取価格と成約価格は区別して掲載します。</p></section><footer><small>非公式サイトです。価格は取引を保証するものではありません。</small></footer></main>
+<script>
+'use strict';
+const el=id=>document.getElementById(id), yen=n=>new Intl.NumberFormat('ja-JP',{style:'currency',currency:'JPY'}).format(n);
+const day=s=>Date.parse(s+'T00:00:00Z')/86400000;
+const today=()=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+const key=o=>JSON.stringify([o.shopSlug,o.condition,o.channel]);
+const cell=(row,t,cls)=>{const c=row.insertCell();c.textContent=t;if(cls)c.className=cls;return c;};
+function draw(rows,limit){
+ const chart=el('chart');chart.replaceChildren();const byDate=new Map();for(const r of rows)byDate.set(r.checkedAt,r);
+ const points=[...byDate.values()].sort((a,b)=>a.checkedAt.localeCompare(b.checkedAt));
+ const last=points.at(-1),prev=points.at(-2);
+ if(!last){el('change').textContent='履歴なし';return;}
+ const stale=day(today())-day(last.checkedAt)>limit;
+ el('change').textContent=prev&&!stale&&day(last.checkedAt)-day(prev.checkedAt)===1?'前日比：'+((last.price/prev.price-1)*100).toFixed(2)+'%':'前日比：算出不可（連続した新しい確認日が不足）';
+ if(points.length<2){chart.textContent='確認日 '+last.checkedAt+'：'+yen(last.price)+'。履歴が1日分のため推移グラフは未表示です。';return;}
+ const ns='http://www.w3.org/2000/svg', svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 720 260');
+ const add=(tag,attrs,txt)=>{const n=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);if(txt!==undefined)n.textContent=txt;svg.append(n);return n;};
+ const min=Math.min(...points.map(p=>p.price)),max=Math.max(...points.map(p=>p.price));const lo=min===max?Math.max(0,min*0.95):min,hi=min===max?max*1.05:max;
+ const x=p=>125+565*(day(p.checkedAt)-day(points[0].checkedAt))/(day(last.checkedAt)-day(points[0].checkedAt)),y=p=>210-180*(p.price-lo)/(hi-lo);
+ for(let i=0;i<=4;i++){const v=lo+(hi-lo)*i/4, yy=210-180*i/4;add('line',{x1:125,x2:690,y1:yy,y2:yy,stroke:'#dce3eb'});add('text',{x:115,y:yy+4,'text-anchor':'end','font-size':12,fill:'#53657a'},yen(Math.round(v)));}
+ add('polyline',{points:points.map(p=>x(p)+','+y(p)).join(' '),fill:'none',stroke:'#235c9b','stroke-width':2});
+ for(const p of points){const dot=add('circle',{cx:x(p),cy:y(p),r:4,fill:'#235c9b'});const title=document.createElementNS(ns,'title');title.textContent=p.checkedAt+' '+yen(p.price);dot.append(title);}
+ add('text',{x:125,y:240,'font-size':12,fill:'#53657a'},points[0].checkedAt);add('text',{x:690,y:240,'text-anchor':'end','font-size':12,fill:'#53657a'},last.checkedAt);chart.append(svg);
+}
+async function load(){
+ try{
+ const response=await fetch('./data/market.json',{cache:'no-store'});if(!response.ok)throw Error('HTTP '+response.status);const d=await response.json();
+ if(!Array.isArray(d.offers)||!Array.isArray(d.history))throw Error('invalid data');
+ const limit=d.staleAfterDays, now=day(today());el('card').textContent=d.card.name+' '+d.card.number+'（'+d.card.grade+'）';el('status').textContent='最終取得日：'+d.retrievedAt+' ／ '+d.offers.length+'件';
+ let staleCount=0;
+ for(const o of [...d.offers].sort((a,b)=>b.price-a.price)){
+ const age=now-day(o.checkedAt),stale=!Number.isFinite(age)||age<0||age>limit;if(stale)staleCount++;
+ const r=el('offers').insertRow();const c=r.insertCell(),a=document.createElement('a');if(/^https:\/\//.test(o.sourceUrl))a.href=o.sourceUrl;a.textContent=o.shop;c.append(a,document.createElement('br'));const s=document.createElement('small');s.textContent=o.condition+' ／ '+o.channel;c.append(s);
+ cell(r,yen(o.price),'price');cell(r,o.checkedAt);cell(r,stale?'古い情報・要確認':'確認日から'+age+'日');
+ }
+ if(staleCount||!d.offers.length){el('warning').hidden=false;el('warning').textContent=staleCount===d.offers.length?'現在の相場として利用できる新しい確認データがありません。掲載額は過去の買取提示額です。':staleCount+'件は確認日から'+limit+'日を超えています。';}
+ el('notice').textContent=d.notice||'取引前に各店舗の公式情報で再確認してください。';
+ const groups=new Map();for(const o of d.history){const k=key(o);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(o);}
+ for(const [k,rows] of groups){const opt=document.createElement('option');opt.value=k;opt.textContent=rows[0].shop+' ／ '+rows[0].condition+' ／ '+rows[0].channel;el('shop').append(opt);}
+ if(groups.size){el('shop').disabled=false;const render=()=>draw(groups.get(el('shop').value)||[],limit);el('shop').addEventListener('change',render);render();}else el('change').textContent='履歴なし';
+ }catch(e){el('offers').replaceChildren();el('status').textContent='価格データを読み込めませんでした。';el('warning').hidden=false;el('warning').textContent='現在は価格を表示できません。出典ページでご確認ください。';}
+}load();
+</script></body></html>
