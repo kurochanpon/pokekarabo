@@ -1,4 +1,27 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-NKCX7RfSu1qBKT3rG1VM488iKIuIO+mwfC9Ysl7n5mQ='; style-src 'sha256-84m2Wk0fvS4iwwdCRbA5e50Xq3Hn+OHPc1Bup9eSPuM='; connect-src 'none'; base-uri 'none'; form-action 'none'"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NEON DODGE</title><style>*{box-sizing:border-box}body{margin:0;background:#101322;color:#fff;font:16px system-ui;display:grid;place-items:center;min-height:100dvh}main{width:min(95vw,420px,65vh);text-align:center}canvas{width:100%;height:auto;background:#161c31;border:1px solid #34415f;border-radius:16px;touch-action:none;display:block}h1{letter-spacing:5px;margin:8px}button{border:0;border-radius:12px;background:#62f5cf;color:#101322;padding:14px 28px;font:bold 17px system-ui;cursor:pointer}p{color:#b9c5df;margin:8px}#status{min-height:24px}</style><main><h1>NEON DODGE</h1><p>Drag or use arrow keys. Dodge the blocks.</p><canvas id="c" width="360" height="440" aria-label="Obstacle avoidance game"></canvas><p id="status">Ready?</p><button id="start">PLAY</button><p id="best"></p></main><script>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-NKCX7RfSu1qBKT3rG1VM488iKIuIO+mwfC9Ysl7n5mQ='; style-src 'sha256-znj1zGn2W4uxE+Z9YZc235uOJ92EFLpxvgY1vwQXoU8='; connect-src 'none'; base-uri 'none'; form-action 'none'"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NEON DODGE</title><style>*{box-sizing:border-box}body{margin:0;background:#101322;color:#fff;font:16px system-ui;display:grid;place-items:center;min-height:100dvh}main{width:min(95vw,420px,65vh);text-align:center}canvas{width:100%;height:auto;background:#161c31;border:1px solid #34415f;border-radius:16px;touch-action:none;display:block}h1{letter-spacing:5px;margin:8px}button{border:0;border-radius:12px;background:#62f5cf;color:#101322;padding:14px 28px;font:bold 17px system-ui;cursor:pointer}p{color:#b9c5df;margin:8px}#status{min-height:24px}
+@media (min-width: 600px) and (orientation: landscape) {
+  main {
+    width: min(95vw, 760px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(210px, 1fr);
+    grid-template-rows: repeat(5, minmax(0, 1fr));
+    align-items: center;
+    gap: 4px 20px;
+  }
+  main > :not(canvas) { grid-column: 2; }
+  main > h1 { grid-row: 1; }
+  main > p:first-of-type { grid-row: 2; }
+  #status { grid-row: 3; }
+  #start { grid-row: 4; justify-self: center; }
+  #best { grid-row: 5; }
+  canvas {
+    grid-column: 1;
+    grid-row: 1 / span 5;
+    width: min(100%, calc(78dvh - 12px));
+    margin-inline: auto;
+  }
+}
+</style><main><h1>NEON DODGE</h1><p>Drag or use arrow keys. Dodge the blocks.</p><canvas id="c" width="360" height="440" aria-label="Obstacle avoidance game"></canvas><p id="status">Ready?</p><button id="start">PLAY</button><p id="best"></p></main><script>
 const c=document.querySelector('#c'),g=c.getContext('2d'),statusEl=document.querySelector('#status'),btn=document.querySelector('#start'),bestEl=document.querySelector('#best');let best=0;try{best=Number(localStorage.getItem('neon-dodge-best'))||0}catch{}let x=180,blocks=[],running=false,t=0,last=0,spawn=0,keys={},raf=0;const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));function bestText(){bestEl.textContent='BEST: '+best.toFixed(1)+' s'}bestText();function draw(t=0){g.clearRect(0,0,360,440);g.strokeStyle='#222d47';for(let i=0;i<360;i+=30){g.beginPath();g.moveTo(i,0);g.lineTo(i,440);g.stroke()}for(const b of blocks){g.fillStyle='#ff597e';g.fillRect(b.x,b.y,b.w,b.h)}g.fillStyle='#62f5cf';g.fillRect(x-13,390,26,26);g.fillStyle='#fff';g.font='bold 20px system-ui';g.fillText(t.toFixed(1)+' s',12,28)}function end(t){running=false;cancelAnimationFrame(raf);best=Math.max(best,t);try{localStorage.setItem('neon-dodge-best',String(best))}catch{}bestText();statusEl.textContent='Game over — '+t.toFixed(1)+' s';btn.textContent='TRY AGAIN';btn.hidden=false;window.dispatchEvent(new CustomEvent('gameover',{detail:{score:t}}))}function frame(now){if(!running)return;const dt=Math.min(Math.max(0,(now-last)/1000),.05);last=now;t+=dt;x=clamp(x+((keys.ArrowRight?1:0)-(keys.ArrowLeft?1:0))*250*dt,13,347);spawn-=dt;if(spawn<=0){let w=30+Math.random()*65;blocks.push({x:Math.random()*(360-w),y:-30,w,h:22});spawn=Math.max(.24,.75-t*.012)}for(const b of blocks){b.y+=(145+Math.min(t*8,240))*dt;if(b.x<x+13&&b.x+b.w>x-13&&b.y<416&&b.y+b.h>390){draw(t);end(t);return}}blocks=blocks.filter(b=>b.y<460);draw(t);raf=requestAnimationFrame(frame)}btn.onclick=()=>{if(running)return;blocks=[];keys={};x=180;spawn=.4;t=0;running=true;last=performance.now();btn.hidden=true;statusEl.textContent='Survive as long as possible!';raf=requestAnimationFrame(frame)};function move(e){if(running)x=clamp((e.clientX-c.getBoundingClientRect().left)*360/c.getBoundingClientRect().width,13,347)}c.addEventListener('pointerdown',e=>{c.setPointerCapture(e.pointerId);move(e)});c.addEventListener('pointermove',e=>{if(e.pointerType==='mouse'||e.buttons||c.hasPointerCapture(e.pointerId))move(e)});window.addEventListener('keydown',e=>{if (running && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
   e.preventDefault();
   keys[e.key] = true;
